@@ -54,7 +54,7 @@
        (translate-and-dispatch msg-ptr)
        nil)))
 
-#+(or clisp sbcl)
+#+(or clisp)
 (defun startup (thread-name start-fn)
   (declare (ignore thread-name))
   (funcall start-fn)
@@ -63,7 +63,7 @@
 #+allegro
 (eval-when (:compile-top-level :load-top-level :execute) (require :process))
 
-#+ccl
+#+(or ccl sbcl)
 (defun startup (thread-name start-fn)
   (bt:make-thread (lambda ()
 		    (funcall start-fn)
