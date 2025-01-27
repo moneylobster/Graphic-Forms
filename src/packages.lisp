@@ -266,7 +266,8 @@
 (defpackage #:graphic-forms.uitoolkit.widgets
   (:nicknames #:gfw)
   (:shadow #:step)
-  (:use #:common-lisp)
+  (:use #:common-lisp
+		#:bordeaux-threads)
   (:import-from :closer-mop :ensure-generic-function)
   (:export
 

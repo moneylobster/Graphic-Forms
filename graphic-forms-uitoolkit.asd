@@ -4,7 +4,8 @@
 	       "lw-compat"
 	       "closer-mop"
 	       "com.gigamonkeys.macro-utilities"
-	       "com.gigamonkeys.binary-data")
+	       "com.gigamonkeys.binary-data"
+		   "bordeaux-threads")
   :components
   ((:file "config")
    (:module "src"
