@@ -267,9 +267,6 @@
   (:nicknames #:gfw)
   (:shadow #:step)
   (:use #:common-lisp)
-#+sbcl
-  (:import-from :sb-mop :ensure-generic-function)
-#-sbcl
   (:import-from :closer-mop :ensure-generic-function)
   (:export
 
