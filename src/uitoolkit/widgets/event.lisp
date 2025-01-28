@@ -85,11 +85,8 @@
 									 (cffi:pointer-address (cffi:get-callback 'subclassing_wndproc))))
 	(let ((errcode (gfs::get-last-error)))
 	  (unless (zerop errcode)
-		(restart-case (error 'gfs:win32-error :detail "set-window-long failed"
-											  :code errcode)
-		  (ignore-error ()
-			:report "Ignore the failure."
-			nil))))))
+		(cerror "Continue." 'gfs:win32-error :detail "set-window-long failed"
+											 :code errcode)))))
 
 (defun dispatch-control-notification (widget wparam-hi)
   (let ((disp (dispatcher widget)))
