@@ -18,7 +18,12 @@
 
 (defcfun
   ("GetLastError" get-last-error)
-  DWORD)
+	DWORD)
+
+(defcfun
+	("SetLastError" set-last-error)
+	:void
+  (dw-err-code DWORD))
 
 (defcfun
   ("GetModuleHandleA" get-module-handle)

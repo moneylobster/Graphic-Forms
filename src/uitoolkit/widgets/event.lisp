@@ -74,15 +74,22 @@
 
 (defun get-class-wndproc (hwnd)
   (let ((wndproc-val (gfs::get-class-long hwnd gfs::+gclp-wndproc+)))
-    (if (zerop wndproc-val)
+    (when (zerop wndproc-val)
       (error 'gfs:win32-error :detail "get-class-long failed"))
     (logand wndproc-val #xFFFFFFFF)))
 
 (defun subclass-wndproc (hwnd)
-  (if (zerop (gfs::set-window-long hwnd
-                                   gfs::+gwlp-wndproc+
-                                   (cffi:pointer-address (cffi:get-callback 'subclassing_wndproc))))
-    (error 'gfs:win32-error :detail "set-window-long failed")))
+  (gfs::set-last-error 0)
+  (when (zerop (gfs::set-window-long hwnd
+									 gfs::+gwlp-wndproc+
+									 (cffi:pointer-address (cffi:get-callback 'subclassing_wndproc))))
+	(let ((errcode (gfs::get-last-error)))
+	  (unless (zerop errcode)
+		(restart-case (error 'gfs:win32-error :detail "set-window-long failed"
+											  :code errcode)
+		  (ignore-error ()
+			:report "Ignore the failure."
+			nil))))))
 
 (defun dispatch-control-notification (widget wparam-hi)
   (let ((disp (dispatcher widget)))
